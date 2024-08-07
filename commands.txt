@@ -1,0 +1,2 @@
+create component - ng generate component <component name>
+start server -  ng serve --open

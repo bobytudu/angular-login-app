@@ -24,6 +24,12 @@
     "paths": {
       "@spartan-ng/ui-input-helm": [
         ".\\ui-input-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-label-helm": [
+        ".\\ui-label-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-button-helm": [
+        ".\\ui-button-helm/src/index.ts"
       ]
     }
   },

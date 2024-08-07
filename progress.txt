@@ -1,0 +1,2 @@
+1. store- global state management
+2. forms - take input from input elements

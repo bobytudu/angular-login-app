@@ -1,8 +1,10 @@
 <div 
-style="background-image: url(assets/Login.svg);background-size: cover; background-position: center"
-    class="w-screen h-screen bg-no-repeat flex items-center justify-center bg-red-500">
-    <div class="flex rounded-xl bg-white container h-[600px] max-h-[600px]">
+style="background-image: url(assets/Login.svg); background-size: 110%; background-position-x: -10px; background-position-y: -10px;"
+    class="w-screen h-screen bg-no-repeat flex items-center justify-center ">
+    <div class="flex rounded-xl bg-white h-[600px] max-h-[600px] m-auto w-[1051px] overflow-hidden">
         <img src="assets/login_img.svg" />
-    </div>
-
+        <div class="flex flex-col justify-center px-16">
+            <router-outlet></router-outlet>
+        </div>
+        </div>
 </div>

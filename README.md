@@ -10,3 +10,5 @@
 7. after successful registration, user data will be stored in browser's localStorage.
 8. user can now login using the same credentials.
 9. multiple users can be registered.
+
+> Deployed link - [LoginApp](https://angular-login-app-three.vercel.app/)

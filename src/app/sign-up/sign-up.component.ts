@@ -166,7 +166,6 @@ export class SignUpComponent {
 
   async validateData() {
     try {
-      console.log(this.fieldData)
       const result = await this.validationSchema.validate({
         email: this.fieldData.email,
         password: this.fieldData.password,

@@ -41,7 +41,6 @@ export class LoginComponent {
 
   ngOnInit() {
     this.store.select('forms').subscribe((state) => {
-      console.log(state)
       this.email = state.email;
       this.password = state.password
     });

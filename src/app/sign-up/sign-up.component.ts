@@ -14,6 +14,7 @@ import { HlmSelectImports } from '../../ui-components/ui-select-helm/src';
 import * as yup from 'yup';
 import { RouterModule } from '@angular/router';
 import { getLocalUsers } from '../../helper/helper';
+import { FieldsType } from '../../types/types';
 
 @Component({
   selector: 'app-sign-up',
@@ -33,7 +34,7 @@ import { getLocalUsers } from '../../helper/helper';
   styleUrl: './sign-up.component.css',
 })
 export class SignUpComponent {
-  fields = [
+  fields: FieldsType[] = [
     {
       fullWidth: true,
       childrens: [

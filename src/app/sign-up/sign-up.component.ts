@@ -1,12 +1,9 @@
-import { Component, NgModule } from '@angular/core';
+import { Component } from '@angular/core';
 import { HlmInputDirective } from '../../ui-components/ui-input-helm/src';
 import { HlmButtonDirective } from '../../ui-components/ui-button-helm/src';
 import { HlmLabelDirective } from '../../ui-components/ui-label-helm/src';
-import { createSelector, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import {
-  emailSelectors,
-  formReducer,
-  formSelectors,
   FormState,
 } from '../../store/forms.reducer';
 import { setValue } from '../../store/forms.actions';
@@ -110,21 +107,32 @@ export class SignUpComponent {
   ];
   step = 1;
   errorMessage: { name: string; message: string } = { name: '', message: '' };
-  email = '';
-  name = '';
-  password = '';
-  // org_name = '';
-  // designation = '';
-  // dob = '';
-  // city = '';
-  // pincode = '';
+
+  fieldData: FormState = {
+    email: '',
+    phone: '',
+    org_name: '',
+    org_id: '',
+    designation: '',
+    dob: '',
+    city: '',
+    pincode: '',
+    name: '',
+    password: '',
+  }
   allowed_orgs = ['Google', 'Microsoft', 'Facebook', 'Amazon'];
   validationSchema = yup.object({
-    email: yup.string().email().required(),
+    email: yup.string().required(),
     password: yup.string().min(4).required(),
   });
 
   constructor(private store: Store<{ forms: FormState }>) {}
+
+  ngOnInit() {
+    this.store.select('forms').subscribe((state) => {
+      this.fieldData = state;
+    });
+  }
 
   handleInput(event: any) {
     const { value, id: name } = event.target;
@@ -149,6 +157,7 @@ export class SignUpComponent {
     } else {
       (this as any)[name] = value;
       event.target.value = value;
+      this.fieldData = { ...this.fieldData, [name]: value };
       this.errorMessage = { name: '', message: '' };
       this.store.dispatch(setValue({ key: name, value }));
     }
@@ -156,9 +165,10 @@ export class SignUpComponent {
 
   async validateData() {
     try {
+      console.log(this.fieldData)
       const result = await this.validationSchema.validate({
-        email: this.email,
-        password: this.password,
+        email: this.fieldData.email,
+        password: this.fieldData.password,
       });
       if (result) return true;
     } catch (error: any) {
@@ -179,7 +189,7 @@ export class SignUpComponent {
       const localUsers = getLocalUsers();
       if (this.step === 1) {
         const valid = await this.validateData();
-        const user = localUsers.find((u: any) => u.email === this.email);
+        const user = localUsers.find((u: any) => u.email === this.fieldData.email);
         if (user) {
           this.errorMessage = {
             name: 'email',

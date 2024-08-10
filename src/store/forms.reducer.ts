@@ -10,10 +10,15 @@ export interface FormState {
   dob: string;
   city: string;
   pincode: string;
+  name: string;
+  password: string;
+  [key: string]: any
 }
 
+export type Fields = "email" | "phone" | "org_name" | "org_id" | "designation" | "dob" | "city" | "pincode" | "name" | "password";
+
 export const initialState: FormState = {
-  email: '123@gmail.com',
+  email: '',
   phone: '',
   org_name: '',
   org_id: '',
@@ -21,6 +26,8 @@ export const initialState: FormState = {
   dob: '',
   city: '',
   pincode: '',
+  name: '',
+  password: '',
 };
 
 export const formReducer = createReducer(

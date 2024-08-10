@@ -1,63 +1,131 @@
-<div class="w-[300px]">
+<form (ngSubmit)="onSubmit()" class="w-[300px]" #emailForm="ngForm">
     <!-- first step -->
-     <button hlmBtn>
-        Go Back</button>
-    <h3 class="text-2xl mb-3 font-medium text-gray-600">Create Account</h3>
-    <div class="grid grid-cols-2 gap-3 mb-3">
-        <div class="p-1 bg-[#0069D1] rounded-full"></div>
-        <div class="p-1 bg-[#CFD0D4] rounded-full"></div>
-    </div>
-    <!-- <label hlmLabel class="text-[#0069D1]">Enter Email ID
-        <input type="email" class="bg-[#E4ECEE] border-0 rounded-[16px] w-full placeholder:text-[#767676]" hlmInput
-            placeholder="Enter Email ID" />
-    </label>
-
-    <h5 class="text-gray-400 my-5">(OR)</h5>
-
-    <label hlmLabel class="text-[#0069D1] mb-4">Enter Mobile No.
-        <input type="number" class="bg-[#E4ECEE] border-0 rounded-[16px] w-full placeholder:text-[#767676]" hlmInput
-            placeholder="91+" />
-    </label> -->
-
-    <!-- second step -->
-    <div class="mb-3">
-        <label hlmLabel class="text-[#0069D1]">Organisation-name
-            <input class="bg-[#E4ECEE] border-0 rounded-[16px] w-full placeholder:text-[#767676]" hlmInput
-                placeholder="Organisation name" />
-        </label>
-    </div>
-    <div class="mb-3">
-    <label hlmLabel class="text-[#0069D1]">Organisation-id
-        <input class="bg-[#E4ECEE] mb-3 border-0 rounded-[16px] w-full placeholder:text-[#767676]" hlmInput
-            placeholder="Organisation id" />
-    </label>
-    </div>
-    <div class="mb-3">
-    <label hlmLabel class="text-[#0069D1]">Designation
-        <input class="bg-[#E4ECEE] border-0 rounded-[16px] w-full placeholder:text-[#767676]" hlmInput
-            placeholder="Designation" />
-    </label>
-    </div>
-    <div class="mb-3">
-    <label hlmLabel class="text-[#0069D1]">Birth-date
-        <input type="date" class="bg-[#E4ECEE] text-[#767676] border-0 rounded-[16px] w-full placeholder:text-[#767676]" hlmInput
-            placeholder="Enter Email ID" />
-    </label>
-    </div>
-    <div class="grid grid-cols-2 gap-4">
-        <div class="">
-            <label hlmLabel class="text-[#0069D1]">City
-                <input type="email" class="bg-[#E4ECEE] border-0 rounded-[16px] w-full placeholder:text-[#767676]"
-                    hlmInput placeholder="Enter Email ID" />
-            </label>
+    <div *ngIf="step === 1">
+        <h3 class="text-2xl mb-3 font-medium text-gray-600">Create Account</h3>
+        <div class="grid grid-cols-2 gap-3 mb-3">
+            <div class="p-1 bg-[#0069D1] rounded-full"></div>
+            <div class="p-1 bg-[#CFD0D4] rounded-full"></div>
         </div>
-        <div class="">
-            <label hlmLabel class="text-[#0069D1]">Pincode
-                <input type="email" class="bg-[#E4ECEE] border-0 rounded-[16px] w-full placeholder:text-[#767676]"
-                    hlmInput placeholder="Enter Email ID" />
+        <div class="mb-3">
+            <label hlmLabel class="text-[#0069D1]">Email
+                <input id="email" type="email" (input)="handleInput($event)" required name="email" [value]="email"
+                    class="bg-[#E4ECEE] text-[#767676] border-0 rounded-[16px] w-full placeholder:text-[#767676]" hlmInput
+                    placeholder="Enter Email ID" />
             </label>
+            <div *ngIf="errorMessage.name === 'email'" class="text-red-600 text-xs mt-1">
+                {{ errorMessage.message }}
+            </div>
         </div>
-    </div>
-    <button hlmBtn class="w-full rounded-[16px] mt-4 bg-[#0069D1]">Next</button>
+        <div class="mb-3">
+            <label hlmLabel class="text-[#0069D1]">Name
+                <input id="name" (input)="handleInput($event)" required name="name" [value]="name"
+                    class="bg-[#E4ECEE] text-[#767676] border-0 rounded-[16px] w-full placeholder:text-[#767676]" hlmInput
+                    placeholder="Enter full name" />
+            </label>
+            </div>
+            <div class="mb-3">
+            <label hlmLabel class="text-[#0069D1] mb-4">Password
+                <input name="password" id="password" type="password" (input)="handleInput($event)" [value]="password"
+                    class="bg-[#E4ECEE] text-[#767676] border-0 rounded-[16px] w-full placeholder:text-[#767676]" hlmInput
+                    placeholder="Enter Password" />
+            </label>
+            <div *ngIf="errorMessage.name === 'password'" class="text-red-600 text-xs mt-1">
+                {{ errorMessage.message }}
+            </div>
+            </div>
+            <button (click)="goNext()" [disabled]="errorMessage.message" hlmBtn
+                class="w-full rounded-[16px] mt-4 bg-[#0069D1]">Next</button>
+            
+            <div class="flex flex-row mt-2">
+                <h5 class="text-sm ">Already have an account? </h5>
+                <a routerLink="/" class="text-[#0069D1] text-sm ml-2">Login Now</a>
+            </div>
+            </div>
+            <!-- second step -->
+            
+            <!-- template start -->
+            <div *ngIf="step===2">
+                <button hlmBtn class="mb-3" variant="outline" (click)="goBack()">
+                    Go Back</button>
+                <h3 class="text-2xl mb-3 font-medium text-gray-600">Create Account</h3>
+                <div class="grid grid-cols-2 gap-3 mb-3">
+                    <div class="p-1 bg-[#0069D1] rounded-full"></div>
+                    <div class="p-1 bg-[#0069D1] rounded-full"></div>
+                </div>
+                <div *ngFor="let field of fields" class="mb-2">
+                    <div *ngIf="field.fullWidth" class="">
+                        <div *ngFor="let child of field.childrens">
+                            <div *ngIf="child.type === 'select'; else fullWidthInputTemplate">
+                                <label [for]="child.name" hlmLabel class="text-[#0069D1] text-xs">{{ child.label }}</label>
+                                <select class="rounded-[16px] text-xs px-3 py-[10px] w-full bg-[#E4ECEE] text-[#767676]"
+                                    [(ngModel)]="child.value" [name]="child.name" [id]="child.name" (input)="handleInput($event)">
+                                    <option value="">{{child.placeholder}}</option>
+                                    <option value="Developer">Developer</option>
+                                    <option value="Designer">Designer</option>
+                                    <option value="Project Manager">Project Manager</option>
+                                    <option value="Tech Lead">Tech Lead</option>
+                                </select>
+                            </div>
+                            <ng-template #fullWidthInputTemplate>
+                                <label [for]="child.name" hlmLabel class="text-[#0069D1] text-xs">{{ child.label }}</label>
+                                <input hlmInput
+                                    class="bg-[#E4ECEE] text-[#767676] text-xs border-0 rounded-[16px] w-full placeholder:text-[#767676]"
+                                    [type]="child.type" [name]="child.name" [id]="child.name" [required]="child.required"
+                                    [placeholder]="child.placeholder" [maxLength]="child.maxLength" [(ngModel)]="child.value"
+                                    (input)="handleInput($event)" />
+                            </ng-template>
+                            <div *ngIf="errorMessage.name === child.name" class="text-red-600 text-xs mt-1">
+                                {{ errorMessage.message }}
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="!field.fullWidth">
+                        <div class="grid grid-cols-2 gap-4 ">
+                            <div *ngFor="let child of field.childrens">
+                                <div *ngIf="child.type === 'select'; else inputTemplate">
+                                    <brn-select (input)="handleInput($event)" [(ngModel)]="child.value" [name]="child.name"
+                                        [id]="child.name" class="inline-block w-full text-xs text-[#0069D1] font-medium"
+                                        placeholder="Designation">
+                                        <hlm-select-trigger
+                                            class="rounded-[16px] text-xs font-normal w-full bg-[#E4ECEE] text-[#767676] mt-1">
+                                            <hlm-select-value />
+                                        </hlm-select-trigger>
+                                        <hlm-select-content>
+                                            <hlm-option value="Developer">Developer</hlm-option>
+                                            <hlm-option value="Designer">Designer</hlm-option>
+                                            <hlm-option value="Project Manager">Project Manager</hlm-option>
+                                            <hlm-option value="Tech Lead">Tech Lead</hlm-option>
+                                        </hlm-select-content>
+                                    </brn-select>
+                                </div>
+                                <ng-template #inputTemplate>
+                                    <label [for]="child.name" hlmLabel class="text-[#0069D1] text-xs">{{ child.label }}</label>
+                                    <input hlmInput (input)="handleInput($event)"
+                                        class="bg-[#E4ECEE] text-[#767676] text-xs border-0 rounded-[16px] w-full placeholder:text-[#767676]"
+                                        [type]="child.type" [name]="child.name" [id]="child.name" [required]="child.required"
+                                        [placeholder]="child.placeholder" [maxLength]="child?.maxLength"
+                                        [(ngModel)]="child.value" />
+                                </ng-template>
+                                <div *ngIf="child.error" class="text-red-600 text-xs">
+                                    {{ child.error }}
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+                        <button (click)="goNext()" [disabled]="errorMessage.message" hlmBtn
+                            class="w-full rounded-[16px] mt-4 bg-[#0069D1]">Next</button>
+                        
+                        <div class="flex flex-row mt-2">
+                            <h5 class="text-sm ">Already have an account? </h5>
+                            <a routerLink="/" class="text-[#0069D1] text-sm ml-2">Login Now</a>
+                        </div>
+                        </div>
+                        <!-- template end -->
+                        </form>
+                        <div *ngIf="step===3" class="text-center w-full">
+                            <img src="/assets/success_img.svg" class="w-[204px] h-[204px] m-auto mb-10" />
+                            <h3 class="text-2xl font-medium mb-3">Welcome to Solvei8!</h3>
+                            <p class="text-lg text-[#737E8A]">Redirecting your to the Login screen. This might take a few seconds...</p>
 </div>
 

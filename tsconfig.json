@@ -30,6 +30,15 @@
       ],
       "@spartan-ng/ui-button-helm": [
         ".\\ui-button-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-select-helm": [
+        ".\\ui-select-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-icon-helm": [
+        ".\\ui-icon-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-alert-helm": [
+        ".\\src/ui-alert-helm/src/index.ts"
       ]
     }
   },

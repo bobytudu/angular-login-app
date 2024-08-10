@@ -1,15 +1,35 @@
-<div class="w-[300px]">
-    <h3 class="text-2xl mb-3 font-medium text-gray-600">Welcome</h3>
-    <label hlmLabel class="text-[#0069D1]">Enter Email ID
-        <input type="email" class="bg-[#E4ECEE] border-0 rounded-[16px] w-full placeholder:text-[#767676]" hlmInput
-            placeholder="Enter Email ID" />
-    </label>
-
-    <h5 class="text-gray-400 my-5">(OR)</h5>
-
-    <label hlmLabel class="text-[#0069D1] mb-4">Enter Mobile No.
-        <input type="number" class="bg-[#E4ECEE] border-0 rounded-[16px] w-full placeholder:text-[#767676]" hlmInput
-            placeholder="91+" />
-    </label>
-    <button hlmBtn class="w-full rounded-[16px] mt-4 bg-[#0069D1]">Next</button>
+<div *ngIf="step===1">
+    <form (ngSubmit)="onSubmit()" class="w-[300px]" #emailForm="ngForm">
+        <h3 class="text-2xl mb-3 font-medium text-gray-600">Welcome</h3>
+        <div class="mb-3">
+            <label hlmLabel class="text-[#0069D1]">Enter Email ID
+                <input (input)="handleInput($event)" type="email" required [(ngModel)]="email" name="email"
+                    class='bg-[#E4ECEE] text-black border-2 rounded-[16px] w-full placeholder:text-[#767676]' hlmInput
+                    placeholder="Enter Email ID" />
+                </label>
+                <div *ngIf="errorMessage.name === 'email'" class="text-red-600 text-xs">
+                    {{ errorMessage.message }}
+                </div>
+                </div>
+    
+        <label hlmLabel class="text-[#0069D1] mb-4">Password
+            <input type="password" (input)="handleInput($event)" required [(ngModel)]="password" name="password"
+                class="bg-[#E4ECEE] text-black border-0 rounded-[16px] w-full placeholder:text-[#767676]" hlmInput
+                placeholder="Enter password" />
+        </label>
+        <div *ngIf="errorMessage.name === 'password'" class="text-red-600 text-xs">
+            {{ errorMessage.message }}
+        </div>
+        <button [disabled]="errorMessage.name" type="submit" hlmBtn
+            class="w-full rounded-[16px] mt-4 bg-[#0069D1]">Login</button>
+        </form>
+        <div class="flex flex-row mt-2">
+            <h5 class="text-sm ">Don't have an account? </h5>
+            <a routerLink="/sign-up" class="text-[#0069D1] text-sm ml-2">Create Now</a>
+        </div>
+        </div>
+        <div *ngIf="step===2" class="text-center w-full">
+            <img src="/assets/success_img.svg" class="w-[204px] h-[204px] m-auto mb-10" />
+            <h3 class="text-2xl font-medium mb-3">Logging you in...</h3>
+            <p class="text-lg text-[#737E8A]">Kindly wait as we are curating the data accordingly.</p>
 </div>
